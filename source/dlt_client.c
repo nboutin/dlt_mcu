@@ -5,11 +5,15 @@
  * \author Nicolas Boutin
  */
 
+#include "buffer/bufs.h"
+
 #include "dlt/dlt_client.h"
 #include "dlt/dlt_server.h"
+#include "dlt_conf.h"
 
 // --- Private functions
 
+static uint32_t Dlt_client_get_timestamp();
 static bool Dlt_client_parse_args(BUFS_t *buffer, uint32_t args_count, va_list args);
 
 // --- Public functions
@@ -25,17 +29,16 @@ bool DLT_client_log(dlt_context_t *context, dlt_log_level_t log_level, uint32_t 
             DLT_Frame_t frame = {0};
             void *mem_block = NULL;
 
-            DLT_Stat_report_global(DLT_STAT_GLOBAL_LOG_COUNT);
+            // TODO DLT_Stat_report_global(DLT_STAT_GLOBAL_LOG_COUNT);
 
-            frame.timestamp = Dlt_Client_get_timestamp();
+            frame.timestamp = Dlt_client_get_timestamp();
             frame.log_level = log_level;
-            frame.msg_counter = DLT_Context_increment_msg_counter(context);
-            frame.msg_id = DLT_Client_offset_message_id(msg_id);
+            frame.msg_counter = DLT_context_increment_msg_counter(context);
+            frame.msg_id = msg_id;
 
-            mem_block = DLT_Mempool_alloc();
+            mem_block = DLT_mempool_alloc();
             if (mem_block != NULL)
             {
-                /* parasoft-begin-suppress ALL "MD_DLT_StdArgStrategy" */
                 va_list args = {NULL};
                 va_start(args, args_count);
 
@@ -51,18 +54,17 @@ bool DLT_client_log(dlt_context_t *context, dlt_log_level_t log_level, uint32_t 
                         }
                         else
                         {
-                            DLT_Stat_report_error(DLT_STAT_ERROR_DATALINK_COPY);
+                            // DLT_Stat_report_error(DLT_STAT_ERROR_DATALINK_COPY);
                         }
                     }
                 }
                 va_end(args);
-                /* parasoft-end-suppress ALL "MD_DLT_StdArgStrategy" */
 
-                DLT_Mempool_free(mem_block);
+                DLT_mempool_free(mem_block);
             }
             else
             {
-                DLT_Stat_report_error(DLT_STAT_ERROR_MEMPOOL_ALLOC);
+                // DLT_Stat_report_error(DLT_STAT_ERROR_MEMPOOL_ALLOC);
             }
         }
     }
@@ -71,10 +73,19 @@ bool DLT_client_log(dlt_context_t *context, dlt_log_level_t log_level, uint32_t 
 
 // --- Private functions
 
+/**
+ * \details DLT-Viewer timestamp is 0.1ms value
+ * \todo use HW timer
+ */
+static uint32_t Dlt_client_get_timestamp()
+{
+    return DLT_get_system_time_100us() + DLT_BOOTLOADER_BOOT_TIME_OFFSET_100us;
+}
+
 static bool Dlt_client_parse_args(BUFS_t *buffer, uint32_t args_count, va_list args)
 {
     bool valid = true;
-    while ((args_count > 0U) && (true == valid))
+    while ((args_count > 0U) && (valid == true))
     {
         dlt_arg_type_t args_type = (dlt_arg_type_t)va_arg(args, uint32_t); /* dlt_arg_type_t pushed was promoted to uint32_t */
         switch (args_type)

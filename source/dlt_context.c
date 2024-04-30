@@ -20,3 +20,16 @@ dlt_log_level_t DLT_context_get_log_level(dlt_context_t *context)
     }
     return log_level;
 }
+
+uint8_t DLT_context_increment_msg_counter(dlt_context_t *context)
+{
+    uint8_t msg_counter = 0;
+
+    if ((context != NULL) && (DLT_mutex_acquire() == true))
+    {
+        context->msg_counter++;
+        msg_counter = context->msg_counter;
+        DLT_mutex_release();
+    }
+    return msg_counter;
+}

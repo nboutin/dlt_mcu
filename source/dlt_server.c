@@ -15,6 +15,41 @@ static bool g_is_started = false;
 
 // --- Public functions
 
+void DLT_server_init()
+{
+    bool start = true;
+
+    if (DLT_mutex_init() == false)
+    {
+        start = false;
+    }
+
+    if (DLT_mempool_init() == false)
+    {
+        start = false;
+    }
+
+    g_is_started = start;
+}
+
+void DLT_server_start()
+{
+    if (DLT_mutex_acquire() == true)
+    {
+        g_is_started = true;
+        DLT_mutex_release();
+    }
+}
+
+void DLT_server_stop()
+{
+    if (DLT_mutex_acquire() == true)
+    {
+        g_is_started = false;
+        DLT_mutex_release();
+    }
+}
+
 bool DLT_server_is_started()
 {
     bool is_started = false;

@@ -51,3 +51,5 @@ typedef struct
 // --- Public functions
 
 dlt_log_level_t DLT_context_get_log_level(dlt_context_t *context);
+
+uint8_t DLT_context_increment_msg_counter(dlt_context_t *context);
