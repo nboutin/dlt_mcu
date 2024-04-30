@@ -10,6 +10,7 @@
 
 #include "dlt_conf.h"
 #include "dlt_protocol.h"
+#include "dlt_uart.h"
 
 #include "dlt_datalink_serial.h"
 
@@ -96,4 +97,38 @@ bool DLT_datalink_serial_copy_log(dlt_context_t *context, DLT_Frame_t *frame)
 
 void DLT_datalink_serial_transmit()
 {
+    DLT_uart_status_t dlt_uart_status = 0U;
+
+    if (DLT_mutex_acquire() == true)
+    {
+        dlt_uart_status = DLT_uart_get_status();
+
+        if ((dlt_uart_status & DLT_UART_STATUS_TX_BUSY) != DLT_UART_STATUS_TX_BUSY)
+        {
+            BUFS_Reset(&g_tx_chunk_buffer);
+
+            g_last_transfer_size = RBUFS_ReadCopyRaw(&g_tx_chunk_buffer, &g_serial_tx_buffer, DLT_SERIAL_TX_CHUNK_SIZE_MAX);
+
+            if (g_last_transfer_size > 0U)
+            {
+                if (DLT_uart_transmit(&g_tx_chunk_buffer) == false)
+                {
+                    g_last_transfer_size = 0U;
+                }
+                else
+                {
+                    // DLT_Stat_report_datalink(DLT_STAT_DATALINK_SERIAL, DLT_STAT_DATALINK_TRANSMITTED, g_last_transfer_size);
+                }
+            }
+        }
+        DLT_mutex_release();
+    }
+}
+
+void DLT_uart_event_callback(DLT_uart_event_t event)
+{
+    if ((event & DLT_UART_EVENT_TRANSMIT_COMPLETE) == DLT_UART_EVENT_TRANSMIT_COMPLETE)
+    {
+        g_last_transfer_size = 0U;
+    }
 }
