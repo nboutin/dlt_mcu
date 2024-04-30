@@ -9,6 +9,8 @@
 
 #include <stdbool.h>
 
+// --- Public functions
+
 void DLT_server_init();
 
 void DLT_server_start();
@@ -16,3 +18,5 @@ void DLT_server_start();
 void DLT_server_stop();
 
 bool DLT_server_is_started();
+
+void DLT_Server_run();

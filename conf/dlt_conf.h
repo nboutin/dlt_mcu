@@ -11,10 +11,15 @@
 
 // --- Public constants
 
+#define DLT_FRAME_SIZE_MAX 128U
+
 #define DLT_BOOTLOADER_BOOT_TIME_OFFSET_100us 1000U // TODO measure the real value
 
 #define DLT_MEMPOOL_BLOCK_SIZE 128U
 #define DLT_MEMPOOL_BLOCK_COUNT 1U
+
+#define DLT_SERIAL_TX_BUFFER_SIZE 1024U
+#define DLT_SERIAL_TX_CHUNK_SIZE_MAX 100U
 
 // --- Public functions
 

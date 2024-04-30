@@ -8,6 +8,7 @@
 #include "dlt/dlt_server.h"
 
 #include "dlt_conf.h"
+#include "dlt_datalink.h"
 
 // --- Private variables
 
@@ -25,6 +26,11 @@ void DLT_server_init()
     }
 
     if (DLT_mempool_init() == false)
+    {
+        start = false;
+    }
+
+    if (DLT_datalink_init() == false)
     {
         start = false;
     }
@@ -59,4 +65,12 @@ bool DLT_server_is_started()
         DLT_mutex_release();
     }
     return is_started;
+}
+
+void DLT_Server_run()
+{
+    if (DLT_server_is_started() == true)
+    {
+        DLT_datalink_transmit();
+    }
 }
