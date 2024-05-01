@@ -9,7 +9,7 @@
 
 #include <stdbool.h>
 
-#include "buffer/bufs.h"
+#include "buffer/buffer.h"
 
 // --- Public types
 

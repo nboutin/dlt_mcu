@@ -16,6 +16,6 @@
 
 bool DLT_datalink_init();
 
-bool DLT_datalink_copy_log(dlt_context_t *context, DLT_Frame_t *frame);
+bool DLT_datalink_copy_log(dlt_context_t* context, DLT_Frame_t* frame);
 
 void DLT_datalink_transmit();

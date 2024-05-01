@@ -11,6 +11,8 @@
 
 // --- Public constants
 
+#define DLT_ECU_ID "ECU1"
+
 #define DLT_FRAME_SIZE_MAX 128U
 
 #define DLT_BOOTLOADER_BOOT_TIME_OFFSET_100us 1000U // TODO measure the real value
@@ -23,7 +25,7 @@
 
 // --- Public functions
 
-#define DLT_get_system_time_100us() (HAL_GetTick() * 10U)
+#define DLT_get_system_time_100us() (10) // (HAL_GetTick() * 10U)
 
 bool DLT_mutex_init() { return true; }
 bool DLT_mutex_acquire() { return true; }
@@ -31,4 +33,4 @@ bool DLT_mutex_release() { return true; }
 
 bool DLT_mempool_init();
 void *DLT_mempool_alloc();
-void DLT_Mempool_free(void *block);
+void DLT_mempool_free(void *block);

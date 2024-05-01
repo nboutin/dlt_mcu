@@ -1,4 +1,8 @@
-set(target_name dlt)
+cmake_minimum_required(VERSION 3.14 FATAL_ERROR)
+
+project(dlt_mcu)
+
+set(target_name dlt_mcu)
 
 add_library(${target_name} OBJECT
   source/dlt_client.c
@@ -31,10 +35,16 @@ target_compile_definitions(${target_name}
     # $<$<BOOL:${BUILD_TESTS}>:STATIC=>
 )
 
+include(cmake/get_cpm.cmake)
+include(cmake/CPM.cmake)
+
+CPMAddPackage("gh:nboutin/buffer_mcu@0.2.0")
+CPMAddPackage("gh:nboutin/ring_buffer_mcu@0.1.0")
+
 target_link_libraries(${target_name}
   PUBLIC
-    buffer
-    ring_buffer
+    buffer_mcu
+    ring_buffer_mcu
   PRIVATE
 )
 
