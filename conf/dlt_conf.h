@@ -9,9 +9,12 @@
 
 #include <stdbool.h>
 
+#include "dlt/dlt_context.h"
+
 // --- Public constants
 
 #define DLT_ECU_ID "ECU1"
+#define DLT_LOG_LEVEL_DEFAULT DLT_LOG_DEBUG
 
 #define DLT_FRAME_SIZE_MAX 128U
 
@@ -27,9 +30,9 @@
 
 #define DLT_get_system_time_100us() (10) // (HAL_GetTick() * 10U)
 
-bool DLT_mutex_init() { return true; }
-bool DLT_mutex_acquire() { return true; }
-bool DLT_mutex_release() { return true; }
+static inline bool DLT_mutex_init() { return true; }
+static inline bool DLT_mutex_acquire() { return true; }
+static inline bool DLT_mutex_release() { return true; }
 
 bool DLT_mempool_init();
 void *DLT_mempool_alloc();

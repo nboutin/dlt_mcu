@@ -38,14 +38,14 @@ typedef enum {
 #define DLT_LEN(FIRST_ARG_DLT_TYPE, ...) (FIRST_ARG_DLT_TYPE)
 
 #define LEN_DLT_BOOL    1U
-#define LEN_DLT_UINT8   1U
-#define LEN_DLT_UINT16  2U
-#define LEN_DLT_UINT32  4U
-#define LEN_DLT_UINT64  8U
-#define LEN_DLT_INT8    1U
-#define LEN_DLT_INT16   2U
-#define LEN_DLT_INT32   4U
-#define LEN_DLT_INT64   8U
+#define LEN_DLT_U8      1U
+#define LEN_DLT_U16     2U
+#define LEN_DLT_U32     4U
+#define LEN_DLT_U64     8U
+#define LEN_DLT_I8      1U
+#define LEN_DLT_I16     2U
+#define LEN_DLT_I32     4U
+#define LEN_DLT_I64     8U
 #define LEN_DLT_FLOAT32 4U
 #define LEN_DLT_FLOAT64 8U
 #define LEN_DLT_CSTRING 0U

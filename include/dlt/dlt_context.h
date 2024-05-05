@@ -48,6 +48,10 @@ typedef struct {
 
 // --- Public functions
 
+void DLT_context_register(dlt_context_t* context, const dlt_ctx_name_t ctx_id, const char* description);
+
+void DLT_context_set_log_level(dlt_context_t* context, dlt_log_level_t log_level);
+
 dlt_log_level_t DLT_context_get_log_level(dlt_context_t* context);
 
 uint8_t DLT_context_increment_msg_counter(dlt_context_t* context);

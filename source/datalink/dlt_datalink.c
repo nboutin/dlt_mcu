@@ -6,6 +6,7 @@
  */
 
 #include "dlt_datalink.h"
+#include "dlt_datalink_serial.h"
 
 // --- Public functions
 

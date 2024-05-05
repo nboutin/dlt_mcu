@@ -1,10 +1,7 @@
-cmake_minimum_required(VERSION 3.14 FATAL_ERROR)
-
+cmake_minimum_required(VERSION 3.28)
 project(dlt_mcu)
 
-set(target_name dlt_mcu)
-
-add_library(${target_name} OBJECT
+add_library(${PROJECT_NAME} OBJECT
   source/dlt_client.c
   source/dlt_context.c
   source/dlt_frame.c
@@ -15,16 +12,17 @@ add_library(${target_name} OBJECT
   conf/dlt_uart.c
 )
 
-target_include_directories(${target_name}
+target_include_directories(${PROJECT_NAME}
   PUBLIC
     include
+    conf
   PRIVATE
     source
     source/datalink
     conf
 )
 
-target_compile_definitions(${target_name}
+target_compile_definitions(${PROJECT_NAME}
   PUBLIC
     # DLT_WITH_FLOAT
   PRIVATE
@@ -38,10 +36,10 @@ target_compile_definitions(${target_name}
 include(cmake/get_cpm.cmake)
 include(cmake/CPM.cmake)
 
-CPMAddPackage("gh:nboutin/buffer_mcu@0.2.0")
-CPMAddPackage("gh:nboutin/ring_buffer_mcu@0.1.0")
+CPMAddPackage("gh:nboutin/buffer_mcu@1.0.0")
+CPMAddPackage("gh:nboutin/ring_buffer_mcu@1.0.0")
 
-target_link_libraries(${target_name}
+target_link_libraries(${PROJECT_NAME}
   PUBLIC
     buffer_mcu
     ring_buffer_mcu
@@ -50,4 +48,4 @@ target_link_libraries(${target_name}
 
 # ---
 
-# add_subdirectory(test)
+add_subdirectory(test)

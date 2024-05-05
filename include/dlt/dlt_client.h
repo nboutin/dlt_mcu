@@ -34,26 +34,33 @@
  * \param[in] context_description Context description
  * \code {.c}
  * DLT_DECLARE_CONTEXT(context);
- * DLT_REGISTER_CONTEXT(context, "my_context", "context description");
+ * DLT_REGISTER_CONTEXT(context, "application name", "context name", "context description");
  * \endcode
  */
-#define DLT_REGISTER_CONTEXT(context, context_name, context_description)                                               \
+#define DLT_REGISTER_CONTEXT(context, application_name, context_name, context_description)                             \
   DLT_context_register(&(context), (context_name), (context_description))
+
+/**
+ * \brief Set log level
+ * \param[in] context Context to set log level
+ * \param[in] log_level Log level
+ */
+#define DLT_CONTEXT_SET_LOG_LEVEL(context, log_level) DLT_context_set_log_level(&(context), (log_level))
 
 /**
  * DLT argument formatter type
  */
 #define DLT_BOOL(BOOL_VAR) LEN_DLT_BOOL, DLT_ARG_BOOL, (BOOL_VAR)
 
-#define DLT_U8(INT_VAR)  LEN_DLT_UINT8, DLT_ARG_UINT8, (uint8_t) (INT_VAR)
-#define DLT_U16(INT_VAR) LEN_DLT_UINT16, DLT_ARG_UINT16, (uint16_t) (INT_VAR)
-#define DLT_U32(INT_VAR) LEN_DLT_UINT32, DLT_ARG_UINT32, (uint32_t) (INT_VAR)
-#define DLT_U64(INT_VAR) LEN_DLT_UINT64, DLT_ARG_UINT64, (uint64_t) (INT_VAR)
+#define DLT_U8(INT_VAR)  LEN_DLT_U8, DLT_ARG_UINT8, (uint8_t) (INT_VAR)
+#define DLT_U16(INT_VAR) LEN_DLT_U16, DLT_ARG_UINT16, (uint16_t) (INT_VAR)
+#define DLT_U32(INT_VAR) LEN_DLT_U32, DLT_ARG_UINT32, (uint32_t) (INT_VAR)
+#define DLT_U64(INT_VAR) LEN_DLT_U64, DLT_ARG_UINT64, (uint64_t) (INT_VAR)
 
-#define DLT_I8(INT_VAR)  LEN_DLT_INT8, DLT_ARG_INT8, (int8_t) (INT_VAR)
-#define DLT_I16(INT_VAR) LEN_DLT_INT16, DLT_ARG_INT16, (int16_t) (INT_VAR)
-#define DLT_I32(INT_VAR) LEN_DLT_INT32, DLT_ARG_INT32, (int32_t) (INT_VAR)
-#define DLT_I64(INT_VAR) LEN_DLT_INT64, DLT_ARG_INT64, (int64_t) (INT_VAR)
+#define DLT_I8(INT_VAR)  LEN_DLT_I8, DLT_ARG_INT8, (int8_t) (INT_VAR)
+#define DLT_I16(INT_VAR) LEN_DLT_I16, DLT_ARG_INT16, (int16_t) (INT_VAR)
+#define DLT_I32(INT_VAR) LEN_DLT_I32, DLT_ARG_INT32, (int32_t) (INT_VAR)
+#define DLT_I64(INT_VAR) LEN_DLT_I64, DLT_ARG_INT64, (int64_t) (INT_VAR)
 
 #ifdef DLT_WITH_FLOAT
 #define DLT_F32(FLOAT32_VAR) LEN_DLT_FLOAT32, DLT_ARG_FLOAT32, (FLOAT32_VAR)
