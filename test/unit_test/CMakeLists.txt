@@ -1,16 +1,6 @@
 cmake_minimum_required(VERSION 3.28)
 project(dlt_mcu_ut)
 
-# # subhook requires to link with static libs, so set BUILD_SHARED_LIBS OFF
-# set(BUILD_SHARED_LIBS OFF)
-# # Adding Cutie framework
-# get_filename_component(CUTIE_DIR ${TOP_DIR}/other-tools/cutie_framework/cutie REALPATH)
-# get_filename_component(DLFCN_DIR ${TOP_DIR}/other-tools/cutie_framework/dlfcn-win32 REALPATH)
-# include(${CUTIE_DIR}/cutie.cmake)
-
-# include(CTest)
-# enable_testing()
-
 include(cmake/get_cpm.cmake)
 include(cmake/CPM.cmake)
 
@@ -24,12 +14,32 @@ get_filename_component(CUTIE_DIR ${cutie_SOURCE_DIR} REALPATH)
 include(${cutie_SOURCE_DIR}/cutie.cmake)
 
 # ---
+set(comp_NAME dlt_mcu)
+
+# Get include directories from target
+get_target_property(comp_INC_DIR ${comp_NAME} INCLUDE_DIRECTORIES)
+
+# Get sources files list from target
+get_target_property(comp_SOURCES_TMP ${comp_NAME} SOURCES)
+foreach(item ${comp_SOURCES_TMP})
+  list(APPEND comp_SOURCES ${CMAKE_CURRENT_LIST_DIR}/../../${item})
+endforeach()
+
+# Get link libraries from target
+get_target_property(comp_LINK_LIBRARIES ${comp_NAME} LINK_LIBRARIES)
+
+# Get compile definitions from target
+get_target_property(comp_COMPILE_DEFINITIONS ${comp_NAME} COMPILE_DEFINITIONS)
 
 add_cutie_test_target(
   NAME ${PROJECT_NAME}
   TEST suites/it_dlt_client.cpp
-  SOURCES $<TARGET_OBJECTS:buffer_mcu> $<TARGET_OBJECTS:ring_buffer_mcu>
-  LINK_LIBRARIES dlt_mcu test_helper
+  SOURCES
+    ${comp_SOURCES}
+    $<TARGET_OBJECTS:buffer_mcu>
+    $<TARGET_OBJECTS:ring_buffer_mcu>
+  INCLUDE_DIRECTORIES ${comp_INC_DIR}
+  LINK_LIBRARIES ${comp_LINK_LIBRARIES} test_helper
 )
 
 # add_executable(${PROJECT_NAME}

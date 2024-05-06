@@ -3,16 +3,22 @@
 //! \date  2024-04
 //! \author Nicolas Boutin
 
+#include "mock.hpp"
+// #include "Cutie/mock.hpp"
+#include "mock.hpp"
 #include "matcher.h"
 #include <gmock/gmock.h>
 
 extern "C" {
+#include "datalink/dlt_datalink.h"
 #include "dlt/dlt_client.h"
 #include "dlt/dlt_server.h"
 #include "dlt_conf.h"
 }
 
 using namespace testing;
+
+DECLARE_MOCKABLE(DLT_datalink_copy_log, 2);
 
 class DLT_IT_Client : public ::testing::Test {
 protected:
@@ -127,26 +133,23 @@ TEST_F(DLT_IT_Client, set_log_level_004)
   EXPECT_EQ(context.log_level, DLT_LOG_OFF);
 }
 
-#if 0
 /**
  * \brief DLT log id
  */
 TEST_F(DLT_IT_Client, dlt_log_id)
 {
-  INSTALL_MOCK(DLT_Datalink_copy_log);
-  INSTALL_MOCK(DLT_Client_offset_message_id);
+  INSTALL_MOCK(DLT_datalink_copy_log);
 
   // Expectations
   std::vector<std::uint8_t> payload = {0xA5};
-  CUTIE_EXPECT_CALL(DLT_Client_offset_message_id, _).WillRepeatedly(Invoke([](uint32_t msg_id) { return msg_id; }));
-  CUTIE_EXPECT_CALL(DLT_Datalink_copy_log,
+  CUTIE_EXPECT_CALL(DLT_datalink_copy_log,
                     AllOf(Field(&dlt_context_t::ctx_name, EqCArray("ctid", 4)),
                           Field(&dlt_context_t::log_level, Eq(DLT_LOG_INFO)),
                           Field(&dlt_context_t::msg_counter, Eq(0))),
                     AllOf(Field(&DLT_Frame_t::log_level, Eq(DLT_LOG_INFO)),
                           Field(&DLT_Frame_t::msg_counter, Eq(0)),
                           Field(&DLT_Frame_t::msg_id, Eq(1)),
-                          Field(&DLT_Frame_t::payload, Field(&BUFS_t::data, EqCArray(payload.data(), payload.size())))))
+                          Field(&DLT_Frame_t::payload, Field(&BUF_t::data, EqCArray(payload.data(), payload.size())))))
       .WillOnce(Return(true));
 
   // Test steps
@@ -154,7 +157,7 @@ TEST_F(DLT_IT_Client, dlt_log_id)
   DLT_REGISTER_CONTEXT(context, "app", "ctid", "context description");
   EXPECT_TRUE(DLT_LOG_ID1(context, DLT_LOG_INFO, 1, DLT_U8(0xA5)));
 }
-
+#if 0
 /**
  * \brief DLT_BOOL
  */
