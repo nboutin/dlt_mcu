@@ -23,3 +23,9 @@ cmake -S . -B build -G Ninja
 cmake --build build
 (cd build/test/unit_test && ctest)
 ```
+
+## CPM local package override
+
+```console
+cmake -S . -B build -G Ninja -DCPM_<dep>_SOURCE=../<dep>
+```
