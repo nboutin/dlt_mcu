@@ -18,13 +18,25 @@
     {
       "name": "host_gcc",
       "displayName": "Host GCC",
-      "description": "Host GCC with Ninja",
       "inherits": "base",
       "generator": "Ninja",
       "binaryDir": "${sourceDir}/build/${presetName}",
       "cacheVariables": {
         "CMAKE_C_COMPILER": "gcc",
         "CMAKE_CXX_COMPILER": "g++"
+      }
+    },
+    {
+      "name": "host_gcc_test",
+      "displayName": "Host GCC Test",
+      "inherits": "base",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "gcc",
+        "CMAKE_CXX_COMPILER": "g++",
+        "CMAKE_BUILD_TYPE": "Debug",
+        "DLT_MCU_TEST": "ON"
       }
     }
   ],
@@ -39,16 +51,22 @@
       "displayName": "Host GCC",
       "inherits": "base",
       "configurePreset": "host_gcc"
+    },
+    {
+      "name": "host_gcc_test",
+      "displayName": "Host GCC Test",
+      "inherits": "base",
+      "configurePreset": "host_gcc_test"
     }
   ],
   "testPresets": [
     {
       "name": "test",
-      "configurePreset": "host_gcc",
+      "configurePreset": "host_gcc_test",
       "output": {
         "shortProgress": false,
         "outputOnFailure": true,
-        "outputLogFile": "buffet_ut.log"
+        "outputLogFile": "dlt_mcu_test.log"
       },
       "execution": {
         "stopOnFailure": true,

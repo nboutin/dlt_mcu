@@ -1,5 +1,21 @@
 cmake_minimum_required(VERSION 3.28)
+
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+
+include(cmake/get_cpm.cmake)
+include(cmake/CPM.cmake)
+if(DLT_MCU_TEST)
+  include(cmake/cutie_config.cmake)
+endif()
+
+# ---
+
 project(dlt_mcu)
+
+CPMAddPackage("gh:nboutin/buffer_mcu@1.0.0")
+CPMAddPackage("gh:nboutin/ring_buffer_mcu@1.0.0")
 
 add_library(${PROJECT_NAME} OBJECT
   source/dlt_client.c
@@ -33,12 +49,6 @@ target_compile_definitions(${PROJECT_NAME}
     # $<$<BOOL:${BUILD_TESTS}>:STATIC=>
 )
 
-include(cmake/get_cpm.cmake)
-include(cmake/CPM.cmake)
-
-CPMAddPackage("gh:nboutin/buffer_mcu@1.0.0")
-CPMAddPackage("gh:nboutin/ring_buffer_mcu@1.0.0")
-
 target_link_libraries(${PROJECT_NAME}
   PUBLIC
     buffer_mcu
@@ -48,4 +58,6 @@ target_link_libraries(${PROJECT_NAME}
 
 # ---
 
-add_subdirectory(test)
+if(DLT_MCU_TEST)
+  add_subdirectory(test)
+endif()

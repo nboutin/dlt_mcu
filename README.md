@@ -28,4 +28,5 @@ cmake --build build
 
 ```console
 cmake -S . -B build -G Ninja -DCPM_<dep>_SOURCE=../<dep>
+cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Debug -DBUILD_TESTS=ON -DCPM_cutie_SOURCE=C:/data/dev/Cutie -DCPM_buffer_mcu_SOURCE=C:/data/dev/buffer_mcu -DCPM_ring_buffer_mcu_SOURCE=C:/data/dev/ring_buffer_mcu
 ```

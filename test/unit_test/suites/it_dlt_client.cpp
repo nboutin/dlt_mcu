@@ -3,9 +3,7 @@
 //! \date  2024-04
 //! \author Nicolas Boutin
 
-#include "mock.hpp"
-// #include "Cutie/mock.hpp"
-#include "mock.hpp"
+#include "cutie/mock.hpp"
 #include "matcher.h"
 #include <gmock/gmock.h>
 
