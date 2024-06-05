@@ -5,6 +5,8 @@
  * \author Nicolas Boutin
  */
 
+#include <stddef.h>
+
 #include "buffer/buffer.h"
 #include "ring_buffer/ring_buffer.h"
 
@@ -33,11 +35,13 @@ static uint16_t g_last_transfer_size;
 
 bool DLT_datalink_serial_init()
 {
+  bool result = DLT_uart_init();
+
   RBUF_InitEmpty(&g_tx_buffer, g_tx_data, DLT_SERIAL_TX_BUFFER_SIZE);
   BUF_InitEmpty(&g_tx_chunk_buffer, g_tx_chunk_data, DLT_SERIAL_TX_CHUNK_SIZE_MAX);
 
   g_last_transfer_size = 0U;
-  return true;
+  return result;
 }
 
 bool DLT_datalink_serial_copy_log(dlt_context_t* context, DLT_Frame_t* frame)

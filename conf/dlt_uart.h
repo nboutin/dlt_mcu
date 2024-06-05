@@ -13,20 +13,22 @@
 
 // --- Public types
 
-typedef enum
-{
-    DLT_UART_STATUS_TX_BUSY = 1,
+typedef enum {
+  DLT_UART_STATUS_READY   = 1 << 0U,
+  DLT_UART_STATUS_TX_BUSY = 1 << 1U,
+  DLT_UART_STATUs_ERROR   = 1 << 2U,
 } DLT_uart_status_t;
 
-typedef enum
-{
-    DLT_UART_EVENT_TRANSMIT_COMPLETE = 1,
+typedef enum {
+  DLT_UART_EVENT_TRANSMIT_COMPLETE = 1,
 } DLT_uart_event_t;
 
 // --- Public functions
 
+bool DLT_uart_init();
+
 DLT_uart_status_t DLT_uart_get_status();
 
-bool DLT_uart_transmit(BUF_t *tx_buffer);
+bool DLT_uart_transmit(BUF_t* tx_buffer);
 
 extern void DLT_uart_event_callback(DLT_uart_event_t event);

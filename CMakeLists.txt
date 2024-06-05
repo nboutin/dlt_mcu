@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.28)
 project(dlt_mcu)
 
+option(DLT_MCU_TEST "Enable DLT test" OFF)
+
 add_library(${PROJECT_NAME} OBJECT
   source/dlt_client.c
   source/dlt_context.c
@@ -48,4 +50,6 @@ target_link_libraries(${PROJECT_NAME}
 
 # ---
 
-add_subdirectory(test)
+if(DLT_MCU_TEST)
+  add_subdirectory(test)
+endif()

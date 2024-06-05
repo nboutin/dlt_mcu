@@ -8,7 +8,7 @@
 #include "dlt/dlt_server.h"
 
 #include "dlt_conf.h"
-#include "dlt_datalink.h"
+#include "datalink/dlt_datalink.h"
 
 // --- Private variables
 
@@ -67,7 +67,7 @@ bool DLT_server_is_started()
   return is_started;
 }
 
-void DLT_Server_run()
+void DLT_server_run()
 {
   if (DLT_server_is_started() == true)
   {

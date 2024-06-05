@@ -5,6 +5,8 @@
  * \author Nicolas BOUTIN
  */
 
+#include <stddef.h>
+
 #include "dlt_datalink.h"
 #include "dlt_datalink_serial.h"
 

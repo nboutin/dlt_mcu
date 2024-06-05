@@ -19,4 +19,4 @@ void DLT_server_stop();
 
 bool DLT_server_is_started();
 
-void DLT_Server_run();
+void DLT_server_run();

@@ -5,6 +5,7 @@
  * \author Nicolas Boutin
  */
 
+#include <stddef.h>
 #include <stdarg.h>
 
 #include "buffer/buffer.h"

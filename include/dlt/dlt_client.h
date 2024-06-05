@@ -52,25 +52,25 @@
  */
 #define DLT_BOOL(BOOL_VAR) LEN_DLT_BOOL, DLT_ARG_BOOL, (BOOL_VAR)
 
-#define DLT_U8(INT_VAR)  LEN_DLT_U8, DLT_ARG_UINT8, (uint8_t) (INT_VAR)
-#define DLT_U16(INT_VAR) LEN_DLT_U16, DLT_ARG_UINT16, (uint16_t) (INT_VAR)
-#define DLT_U32(INT_VAR) LEN_DLT_U32, DLT_ARG_UINT32, (uint32_t) (INT_VAR)
-#define DLT_U64(INT_VAR) LEN_DLT_U64, DLT_ARG_UINT64, (uint64_t) (INT_VAR)
+#define DLT_UINT8(INT_VAR)  LEN_DLT_UINT8, DLT_ARG_UINT8, (uint8_t) (INT_VAR)
+#define DLT_UINT16(INT_VAR) LEN_DLT_UINT16, DLT_ARG_UINT16, (uint16_t) (INT_VAR)
+#define DLT_UINT32(INT_VAR) LEN_DLT_UINT32, DLT_ARG_UINT32, (uint32_t) (INT_VAR)
+#define DLT_UINT64(INT_VAR) LEN_DLT_UINT64, DLT_ARG_UINT64, (uint64_t) (INT_VAR)
 
-#define DLT_I8(INT_VAR)  LEN_DLT_I8, DLT_ARG_INT8, (int8_t) (INT_VAR)
-#define DLT_I16(INT_VAR) LEN_DLT_I16, DLT_ARG_INT16, (int16_t) (INT_VAR)
-#define DLT_I32(INT_VAR) LEN_DLT_I32, DLT_ARG_INT32, (int32_t) (INT_VAR)
-#define DLT_I64(INT_VAR) LEN_DLT_I64, DLT_ARG_INT64, (int64_t) (INT_VAR)
+#define DLT_INT8(INT_VAR)  LEN_DLT_INT8, DLT_ARG_INT8, (int8_t) (INT_VAR)
+#define DLT_INT16(INT_VAR) LEN_DLT_INT16, DLT_ARG_INT16, (int16_t) (INT_VAR)
+#define DLT_INT32(INT_VAR) LEN_DLT_INT32, DLT_ARG_INT32, (int32_t) (INT_VAR)
+#define DLT_INT64(INT_VAR) LEN_DLT_INT64, DLT_ARG_INT64, (int64_t) (INT_VAR)
 
 #ifdef DLT_WITH_FLOAT
-#define DLT_F32(FLOAT32_VAR) LEN_DLT_FLOAT32, DLT_ARG_FLOAT32, (FLOAT32_VAR)
-#define DLT_F64(FLOAT64_VAR) LEN_DLT_FLOAT64, DLT_ARG_FLOAT64, (FLOAT64_VAR)
+#define DLT_FLOAT32(FLOAT32_VAR) LEN_DLT_FLOAT32, DLT_ARG_FLOAT32, (FLOAT32_VAR)
+#define DLT_FLOAT64(FLOAT64_VAR)   LEN_DLT_FLOAT64, DLT_ARG_FLOAT64, (FLOAT64_VAR)
 #endif
 
 #define DLT_RAW(BUF, LEN) LEN_DLT_RAW((BUF), (LEN)), DLT_ARG_RAW, (const void*) (BUF), (uint16_t) (LEN)
 
-#define DLT_C_STR(TEXT) LEN_DLT_CSTRING, DLT_ARG_CSTRING
-#define DLT_STR(TEXT)   LEN_DLT_STRING(TEXT), DLT_ARG_STRING, (TEXT), (uint16_t) (strlen(TEXT) + 1U)
+#define DLT_CSTRING(TEXT) LEN_DLT_CSTRING, DLT_ARG_CSTRING
+#define DLT_STRING(TEXT)  LEN_DLT_STRING(TEXT), DLT_ARG_STRING, (TEXT), (uint16_t) (strlen(TEXT) + 1U)
 
 /**
  * \brief Log a DLT message with 1 argument
@@ -94,6 +94,39 @@
                  (uint8_t) 2,                                                                                          \
                  DLT_CHK(args1),                                                                                       \
                  DLT_CHK(args2))
+
+#define DLT_LOG_ID3(context, log_level, msg_id, args1, args2, args3)                                                   \
+  DLT_client_log(&(context),                                                                                           \
+                 (log_level),                                                                                          \
+                 (uint32_t) (msg_id),                                                                                  \
+                 DLT_LEN(args1) + DLT_LEN(args2) + DLT_LEN(args3),                                                     \
+                 (uint8_t) 3,                                                                                          \
+                 DLT_CHK(args1),                                                                                       \
+                 DLT_CHK(args2),                                                                                       \
+                 DLT_CHK(args3))
+
+#define DLT_LOG_ID4(context, log_level, msg_id, args1, args2, args3, args4)                                            \
+  DLT_client_log(&(context),                                                                                           \
+                 (log_level),                                                                                          \
+                 (uint32_t) (msg_id),                                                                                  \
+                 DLT_LEN(args1) + DLT_LEN(args2) + DLT_LEN(args3) + DLT_LEN(args4),                                    \
+                 (uint8_t) 4,                                                                                          \
+                 DLT_CHK(args1),                                                                                       \
+                 DLT_CHK(args2),                                                                                       \
+                 DLT_CHK(args3),                                                                                       \
+                 DLT_CHK(args4))
+
+#define DLT_LOG_ID5(context, log_level, msg_id, args1, args2, args3, args4, args5)                                     \
+  DLT_client_log(&(context),                                                                                           \
+                 (log_level),                                                                                          \
+                 (uint32_t) (msg_id),                                                                                  \
+                 DLT_LEN(args1) + DLT_LEN(args2) + DLT_LEN(args3) + DLT_LEN(args4) + DLT_LEN(args5),                   \
+                 (uint8_t) 5,                                                                                          \
+                 DLT_CHK(args1),                                                                                       \
+                 DLT_CHK(args2),                                                                                       \
+                 DLT_CHK(args3),                                                                                       \
+                 DLT_CHK(args4),                                                                                       \
+                 DLT_CHK(args5))
 
 /**
  * \brief Log a DLT message
