@@ -5,8 +5,8 @@
  * \author Nicolas Boutin
  */
 
-#include <stddef.h>
 #include <stdarg.h>
+#include <stddef.h>
 
 #include "buffer/buffer.h"
 
@@ -109,19 +109,19 @@ static bool Dlt_client_parse_args(BUF_t* buffer, uint32_t args_count, va_list ar
       case DLT_ARG_INT8:
       {
         int8_t value = (int8_t) va_arg(args, int32_t); /* int8_t pushed was promoted int32_t */
-        BUF_WriteUint8(buffer, (uint8_t) value);
+        BUF_WriteInt8(buffer, value);
       }
       break;
       case DLT_ARG_INT16:
       {
         int16_t value = (int16_t) va_arg(args, int32_t); /* int16_t pushed was promoted int32_t */
-        BUF_WriteUint16(buffer, (uint16_t) value);
+        BUF_WriteInt16(buffer, value);
       }
       break;
       case DLT_ARG_INT32:
       {
         int32_t value = (int32_t) va_arg(args, int32_t); /* int32_t pushed was promoted int32_t */
-        BUF_WriteUint32(buffer, (uint32_t) value);
+        BUF_WriteInt32(buffer, value);
       }
       break;
       case DLT_ARG_INT64:
