@@ -5,6 +5,10 @@
  * \author Nicolas Boutin
  */
 
+#pragma once
+
+#include <string.h>
+
 // --- Public constant
 
 #define DLT_MAX_RAW_SIZE    128U
